@@ -82,3 +82,29 @@ class RestaurantCreateUpdateSerializer(serializers.ModelSerializer):
             'opening_time',
             'closing_time',
             ]
+
+
+class SignUpSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+    class Meta:
+        model = User
+        fields = ['username', 'password']
+
+    def create(self, validated_data):
+        my_username = validated_data['username']
+        my_password = validated_data['password']
+
+        new_user = User(username = my_username)
+        new_user.set_password(my_password)
+        new_user.save()
+
+        return validated_data
+
+
+
+
+
+
+
+
+

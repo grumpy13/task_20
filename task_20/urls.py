@@ -1,22 +1,9 @@
-"""task_20 URL Configuration
 
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/2.0/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
+from rest_framework_jwt.views import obtain_jwt_token
 from restaurants import views
 from api.views import (
     RestaurantListView,
@@ -24,6 +11,7 @@ from api.views import (
     RestaurantUpdateView,
     RestaurantDeleteView,
     RestaurantCreateView,
+    SignUpView,
 )
 
 urlpatterns = [
@@ -47,6 +35,9 @@ urlpatterns = [
     path('api/<int:restaurant_id>/detail/', RestaurantDetailView.as_view(), name='api-detail'),
     path('api/<int:restaurant_id>/update/', RestaurantUpdateView.as_view(), name='api-update'),
     path('api/<int:restaurant_id>/delete/', RestaurantDeleteView.as_view(), name='api-delete'),
+    path('api/signup/', SignUpView.as_view(),name='api-signup'),
+
+    path('api/login/', obtain_jwt_token, name= 'api-login'),
 ]
 
 if settings.DEBUG:
